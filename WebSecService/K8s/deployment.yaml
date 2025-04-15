@@ -19,3 +19,35 @@ spec:
         image: laravel-app:latest
         ports:
         - containerPort: 9000
+        resources:
+          limits:
+            cpu: "500m"
+            memory: "512Mi"
+          requests:
+            cpu: "200m"
+            memory: "256Mi"
+        env:
+          - name: APP_NAME
+            value: "Laravel"
+          - name: APP_ENV
+            value: "production"
+          - name: APP_DEBUG
+            value: "false"
+          - name: DB_CONNECTION
+            value: "mysql"
+          - name: DB_HOST
+            value: "mysql-service"
+          - name: DB_PORT
+            value: "3306"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 9000
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 9000
+          initialDelaySeconds: 15
+          periodSeconds: 5
