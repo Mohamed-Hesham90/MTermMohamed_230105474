@@ -20,7 +20,7 @@ spec:
         fsGroup: 33
       containers:
       - name: laravel
-        image: laravel-app:latest
+        image: localhost:5000/laravel-app:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 9000
