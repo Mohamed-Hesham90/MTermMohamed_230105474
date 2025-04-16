@@ -17,16 +17,14 @@ spec:
       labels:
         app: laravel
     spec:
-      imagePullSecrets:
-      - name: regcred
       securityContext:
         runAsUser: 33
         runAsGroup: 33
         fsGroup: 33
       containers:
       - name: laravel
-        image: mohamed-hesham90/laravel-app:latest
-        imagePullPolicy: Always
+        image: laravel-app:latest
+        imagePullPolicy: Never
         ports:
         - containerPort: 9000
         resources:
