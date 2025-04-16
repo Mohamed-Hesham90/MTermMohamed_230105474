@@ -2,8 +2,11 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: laravel-deployment
+  namespace: laravel-app
   labels:
     app: laravel
+  annotations:
+    argocd.argoproj.io/sync-options: Prune=true
 spec:
   replicas: 1
   selector:
@@ -14,13 +17,15 @@ spec:
       labels:
         app: laravel
     spec:
+      imagePullSecrets:
+      - name: regcred
       securityContext:
         runAsUser: 33
         runAsGroup: 33
         fsGroup: 33
       containers:
       - name: laravel
-        image: localhost:5000/laravel-app:latest
+        image: your-dockerhub-username/laravel-app:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 9000
