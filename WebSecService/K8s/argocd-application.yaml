@@ -8,9 +8,9 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/MTermMohamed230105474/WebSecService.git
+    repoURL: https://github.com/Mohamed-Hesham90/MTermMohamed_230105474.git
     targetRevision: HEAD
-    path: K8s
+    path: WebSecService/K8s
   destination:
     server: https://kubernetes.default.svc
     namespace: laravel-app
