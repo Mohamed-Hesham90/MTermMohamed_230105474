@@ -1,3 +1,4 @@
+# Use PHP 8.2 with FPM from Debian Bullseye as base image
 FROM php:8.2-fpm-bullseye
 
 # Install system dependencies and security updates
@@ -20,19 +21,20 @@ RUN apt-get update && apt-get upgrade -y && apt-get install -y \
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Set working directory
+# Set the working directory
 WORKDIR /var/www
 
-# Copy app files
+# Copy the Laravel application files
 COPY . .
 
 # Install Laravel dependencies
 RUN composer install --no-interaction --optimize-autoloader
 
-# Change ownership
+# Change ownership of the files for PHP-FPM
 RUN chown -R www-data:www-data /var/www
 
-# Expose port 9000 (used by PHP-FPM)
+# Expose port 9000 for PHP-FPM
 EXPOSE 9000
 
+# Start PHP-FPM
 CMD ["php-fpm"]
