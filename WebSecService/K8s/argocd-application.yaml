@@ -3,18 +3,26 @@ kind: Application
 metadata:
   name: laravel-app
   namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
   source:
-    repoURL: https://github.com/your-username/WebSecService.git
+    repoURL: https://github.com/MTermMohamed230105474/WebSecService.git
     targetRevision: HEAD
     path: K8s
   destination:
     server: https://kubernetes.default.svc
-    namespace: default
+    namespace: laravel-app
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
     syncOptions:
     - CreateNamespace=true
+    retry:
+      limit: 5
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 3m
