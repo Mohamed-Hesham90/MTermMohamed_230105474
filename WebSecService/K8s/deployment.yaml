@@ -22,11 +22,23 @@ spec:
         runAsGroup: 33
         fsGroup: 33
       containers:
+      - name: nginx
+        image: nginx:latest
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: nginx-config
+          mountPath: /etc/nginx/conf.d
+        - name: app-files
+          mountPath: /var/www
       - name: laravel
         image: laravel-app:latest
         imagePullPolicy: Never
         ports:
         - containerPort: 9000
+        volumeMounts:
+        - name: app-files
+          mountPath: /var/www
         resources:
           limits:
             cpu: "500m"
@@ -61,3 +73,9 @@ spec:
           periodSeconds: 5
           timeoutSeconds: 3
           failureThreshold: 3
+      volumes:
+      - name: nginx-config
+        configMap:
+          name: nginx-config
+      - name: app-files
+        emptyDir: {}
